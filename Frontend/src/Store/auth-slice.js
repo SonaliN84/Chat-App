@@ -13,7 +13,7 @@ const authSlice=createSlice({
     initialState:initialAuthState,
     reducers:{
        login(state,action){
-        state.token=action.payload.token;
+        state.token=action.payload;
         localStorage.setItem('token',action.payload)
         state.isLoggedIn=true;
        },

@@ -5,7 +5,13 @@ const dotenv=require('dotenv');
 dotenv.config();
 
 const sequelize=require('./util/database');
+
 const userRoutes=require('./routes/user')
+const messageRoutes=require('./routes/message')
+
+
+const User=require('./models/user');
+const Message=require('./models/message')
 
 const app=express()
 
@@ -16,6 +22,10 @@ app.use(cors({
 app.use(bodyParser.json({extended:false}));
 
 app.use(userRoutes)
+app.use(messageRoutes)
+
+Message.belongsTo(User);
+User.hasMany(Message)
 
 sequelize.sync()
 .then((result)=>{

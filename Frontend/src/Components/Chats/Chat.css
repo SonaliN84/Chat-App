@@ -38,3 +38,12 @@
 ::placeholder {
   color: lightgray;
 }
+.messageButton{
+    background-color: #C85C8E;
+    border: none;
+    padding: 7px 10px;
+    outline: none;
+    color: white;
+    border-radius: 5px;
+}
+
