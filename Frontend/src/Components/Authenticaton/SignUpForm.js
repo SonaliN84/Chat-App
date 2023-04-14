@@ -1,10 +1,12 @@
 import { Form, Button } from "react-bootstrap";
 import "./AuthForm.css";
 import { useRef } from "react";
+import { useHistory } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 const SignUP = () => {
+  const history=useHistory();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const nameInputRef = useRef();
@@ -28,6 +30,7 @@ const SignUP = () => {
    const response= await axios.post('http://localhost:3000/user/signup',user)
   
    alert(response.data.message)
+   history.replace('/Login')
   }
   catch(err)
   {

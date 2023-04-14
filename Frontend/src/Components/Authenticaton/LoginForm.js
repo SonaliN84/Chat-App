@@ -2,17 +2,34 @@ import {Form,Button} from 'react-bootstrap';
 import './AuthForm.css';
 import { useRef} from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 const LoginForm=()=>{
     const emailInputRef=useRef();
     const passwordInputRef=useRef();
     
     
 
-    const submitHandler=(event)=>{
+    const submitHandler=async(event)=>{
+    try{
       event.preventDefault();
 
       const enteredEmail=emailInputRef.current.value;
       const enteredPassword=passwordInputRef.current.value;
+
+      const user={
+        email:enteredEmail,
+        password:enteredPassword
+      }
+
+      const response=await axios.post('http://localhost:3000/user/login',user)
+
+      console.log(response)
+    }
+    catch(err){
+        alert(err.response.data.err)
+    }
+
+
     }
   return (
     <Form className='Auth-form border d-grid' onSubmit={submitHandler}>
