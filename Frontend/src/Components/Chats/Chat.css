@@ -1,0 +1,40 @@
+.chatpage {
+  width: 850px;
+  border-radius: 10px;
+  max-width: 95%;
+  margin: 75px auto;
+  display: flex;
+  height: 70vh;
+  overflow: hidden;
+  color: white;
+  box-shadow: 5px 10px 20px rgb(246, 242, 242);
+}
+.sidebar {
+  background-color: #cb6997;
+  /* background-color: #C85C8E; */
+  flex: 1;
+}
+.messagepanel {
+  background-color: #f8d1ea;
+  flex: 2;
+}
+.messageInput {
+  height: 50px;
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.messages {
+  height: calc(100% - 50px);
+}
+.input {
+  width: 100%;
+  border: none;
+  outline: none;
+  color: #6b103b;
+}
+::placeholder {
+  color: lightgray;
+}

@@ -1,5 +1,5 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
-import { NavLink, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 
 import "./Header.css";
 const Header = () => {
