@@ -1,12 +1,16 @@
 import {Form,Button} from 'react-bootstrap';
 import './AuthForm.css';
 import { useRef} from 'react';
-import { NavLink,useHistory } from 'react-router-dom';
+import { NavLink,useHistory} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { authActions } from '../../Store/auth-slice';
+
 const LoginForm=()=>{
     const emailInputRef=useRef();
     const passwordInputRef=useRef();
     const history=useHistory()
+    const dispatch=useDispatch()
     
     const submitHandler=async(event)=>{
     try{
@@ -23,6 +27,9 @@ const LoginForm=()=>{
       const response=await axios.post('http://localhost:3000/user/login',user)
 
       console.log(response)
+      console.log(response.data.token)
+      dispatch(authActions.login(response.data.token))
+
       history.replace('/Chat')
     }
     catch(err){
