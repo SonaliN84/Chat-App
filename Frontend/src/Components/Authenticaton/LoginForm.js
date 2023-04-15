@@ -28,8 +28,9 @@ const LoginForm=()=>{
 
       console.log(response)
       console.log(response.data.token)
-      dispatch(authActions.login(response.data.token))
-
+      console.log(response.data.userName)
+      
+      dispatch(authActions.login({token:response.data.token,name:response.data.userName}))
       history.replace('/Chat')
     }
     catch(err){

@@ -17,7 +17,7 @@ const app=express()
 
 
 app.use(cors({
-    origin:'http://localhost:3002'
+    origin:'http://localhost:3001'
 }));
 app.use(bodyParser.json({extended:false}));
 
@@ -32,5 +32,5 @@ sequelize.sync()
     app.listen(process.env.PORT || 3000);
 })
 .catch(err=>{
-    console.log(">>>>>>",err)
+    console.log(err)
 })
