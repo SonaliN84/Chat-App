@@ -28,6 +28,7 @@
 }
 .messages {
   height: calc(100% - 50px);
+  overflow: auto;
 }
 .input {
   width: 100%;
@@ -46,4 +47,27 @@
     color: white;
     border-radius: 5px;
 }
-
+.showmessage{
+  background-color: #C85C8E;
+  border: 1px solid #C85C8E;
+  padding: 5px;
+  margin:5px;
+  width:50%;
+  
+  clear: both;
+}
+.border1{
+  border-radius: 10px 0px  10px 10px;
+}
+.border2{
+  border-radius: 0px 10px  10px 10px;
+}
+.float{
+  float:right;
+  clear:both;
+}
+.sendername{
+  margin:10px 2px 0px 7px;
+  color:#8b0a46;
+  clear: both;
+}
