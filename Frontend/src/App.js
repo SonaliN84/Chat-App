@@ -12,17 +12,37 @@ function App() {
   const authIsLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   console.log("authIsLoggedIn", authIsLoggedIn);
   const authToken = useSelector((state) => state.auth.token);
+ 
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
+    
     function getMessages() {
+      let array=JSON.parse(localStorage.getItem('messages'));
+      console.log("array",array)
+      let lastId;
+      if(array.length===0){
+
+        lastId=0;
+      }
+      else{
+         lastId=array[array.length-1].id
+      }
+
       axios
-        .get("http://localhost:3000/get-messages", {
+        .get("http://localhost:3000/get-messages", {params:{lastId:lastId},
           headers: { Authorization: authToken },
         })
         .then((response) => {
-          console.log(response);
-          dispatch(messageActions.setMessages(response.data));
+          console.log("resposne",response.data.messages);
+          if(response.data.messages.length>0){
+          console.log("original arry>>>",array)
+          array.shift();
+          let newArray=[...array,...response.data.messages]
+          localStorage.setItem('messages',JSON.stringify(newArray))
+          console.log("new array",newArray)
+          dispatch(messageActions.setMessages(newArray))
+          }
         })
         .catch((err) => {
           console.log(err);

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+const initialMessages=JSON.parse(localStorage.getItem('messages'))
 const initialMessageState={
-    messages:[],
+    messages:initialMessages
 }
 
 const messageSlice=createSlice({
@@ -10,6 +10,7 @@ const messageSlice=createSlice({
     reducers:{
        setMessages(state,action){
         state.messages=action.payload
+        localStorage.setItem('messages',JSON.stringify(action.payload))
        }
     }
 })

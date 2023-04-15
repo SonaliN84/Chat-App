@@ -1,41 +1,54 @@
-const Message=require('../models/message')
+const Message = require("../models/message");
+const { Op } = require("sequelize");
 
-function isStringInValid(string){
-    if(string===undefined || string==null ||string.trim().length===0){
-        return true;
-    }
-    else{
-        return false;
-    }
+function isStringInValid(string) {
+  if (string === undefined || string == null || string.trim().length === 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-exports.postMessage=async(req,res,next)=>{
-    try{
-    const {message}=req.body;
-    console.log(">>>>>>>",message)
-    
-    if(isStringInValid(message))
-    {
-        return res.status(400).json({err:"Please enter valid message"})
+exports.postMessage = async (req, res, next) => {
+  try {
+    const { message } = req.body;
+    console.log(">>>>>>>", message);
+
+    if (isStringInValid(message)) {
+      return res.status(400).json({ err: "Please enter valid message" });
     }
 
-  await req.user.createMessage({name:req.user.name,message:message})
+    await req.user.createMessage({ name: req.user.name, message: message });
 
-  res.status(201).json({message:"message sent successfully"})
-    }
-    catch(err){
-        res.status(500).json({error:"Something went wrong"})
+    res.status(201).json({ message: "message sent successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+exports.getMessage = async (req, res, next) => {
+  try {
+    const lastId = req.query.lastId;
+    if (lastId) {
+      const messages = await Message.findAll({
+        where: { id: { [Op.gt]: lastId } },
+      });
+
+      return res.status(200).json({ messages });
     }
 
-}
+    const total = await Message.count();
+    let limit = 50;
 
-exports.getMessage=async(req,res,next)=>{
-    try{
-   const messages=await Message.findAll();
-    console.log(">>>>>>messages>>>",messages)
-   res.status(200).json(messages)
+    let offset = total - limit;
+    if (offset < 0) {
+      offset = 0;
     }
-    catch(err){
-        console.log(err)
-    }
-}
+
+    const messages = await Message.findAll({ offset, limit });
+    console.log(">>>>>>messages>>>", messages);
+    res.status(200).json(messages);
+  } catch (err) {
+    console.log(err);
+  }
+};

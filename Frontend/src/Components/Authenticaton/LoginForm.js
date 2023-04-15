@@ -2,15 +2,18 @@ import {Form,Button} from 'react-bootstrap';
 import './AuthForm.css';
 import { useRef} from 'react';
 import { NavLink,useHistory} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import axios from 'axios';
 import { authActions } from '../../Store/auth-slice';
+import { messageActions } from "../../Store/message-slice";
 
 const LoginForm=()=>{
     const emailInputRef=useRef();
     const passwordInputRef=useRef();
     const history=useHistory()
     const dispatch=useDispatch()
+    const authToken = useSelector((state) => state.auth.token);
+    console.log(">>>>>>>>>>>>>>>",authToken)
     
     const submitHandler=async(event)=>{
     try{
@@ -25,13 +28,25 @@ const LoginForm=()=>{
       }
 
       const response=await axios.post('http://localhost:3000/user/login',user)
-
       console.log(response)
       console.log(response.data.token)
       console.log(response.data.userName)
       
       dispatch(authActions.login({token:response.data.token,name:response.data.userName}))
       history.replace('/Chat')
+      
+      axios.get("http://localhost:3000/get-messages", {
+        headers: { Authorization: response.data.token },
+      })
+      .then((response) => {
+        console.log(response);
+        dispatch(messageActions.setMessages(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      
     }
     catch(err){
         alert(err.response.data.err)

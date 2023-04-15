@@ -4,12 +4,15 @@ import { useSelector,useDispatch} from "react-redux";
 import { authActions } from "../../Store/auth-slice";
 
 import "./Header.css";
+import { messageActions } from "../../Store/message-slice";
 const Header = () => {
   const authIsLoggedIn=useSelector(state=>state.auth.isLoggedIn);
   const dispatch=useDispatch();
 
   const logoutHandler=()=>{
      dispatch(authActions.logout())
+     dispatch(messageActions.setMessages([]))
+     
   }
   return (
     <Navbar collapseOnSelect expand="lg" className="Header">
