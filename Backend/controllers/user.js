@@ -2,6 +2,8 @@ const User=require('../models/user')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 const { Op } = require("sequelize")
+const Group = require('../models/group')
+const UserGroup = require('../models/usergroup')
 
 function generateAccessToken(id){
     return jwt.sign({userId:id},process.env.TOKEN_SECRET_KEY)
@@ -88,4 +90,42 @@ catch(err){
     res.status(500).json({message:err,success:false})
 }
 
+}
+
+exports.getSearchUser=async(req,res,next)=>{
+    try{
+    const {data}=req.query;
+    const users= await User.findAll({where:{[Op.or]:[{email:data },{phonenumber:data},{name:data}]},attributes:['id','name','email']})
+    console.log("USERS>>>",users)
+    res.status(200).json({users:users,success:true})
+    }
+    catch(err){
+     res.status(500).json({message:"something went wrong"})
+    }
+}
+
+exports.postAddUserToGroup=async(req,res,next)=>{
+    try{
+    const {groupId,userId}=req.body;
+    console.log(">>>>>",groupId,userId)
+   const groups=await Group.findAll({where:{id:groupId}})
+   const group=groups[0];
+   const users=await User.findAll({where:{id:userId}})
+   const user=users[0]
+   await group.addUser(user)
+    res.status(200).json({message:"User added to group successfully"})
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message:"something went wrong"})
+    }
+}
+
+exports.putMakeAdmin=async(req,res,next)=>{
+   const {userId,groupId}=req.body;
+   const result=await UserGroup.findAll({where:{userId:userId,groupId:groupId}})
+   const ans=result[0]
+   ans.admin=true;
+   await ans.save()
+   res.status(200).json({success:true})
 }

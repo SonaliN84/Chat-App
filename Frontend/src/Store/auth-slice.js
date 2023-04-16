@@ -34,6 +34,9 @@ const authSlice=createSlice({
         localStorage.removeItem('userid')
         localStorage.removeItem('groups')
         localStorage.removeItem('groupId')
+        localStorage.removeItem('groupname')
+        localStorage.removeItem('searchresult')
+        localStorage.removeItem('isAdmin')
 
        }
     }

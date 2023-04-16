@@ -13,11 +13,11 @@ const Group=sequelize.define('groups',{
         type:Sequelize.STRING,
         allowNull:false
     },
-    adminname:{
+    createdbyname:{
         type:Sequelize.STRING,
         allowNull:false
     },
-    adminid:{
+    createdbyid:{
         type:Sequelize.INTEGER,
         allowNull:false,
     }

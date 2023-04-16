@@ -9,7 +9,11 @@ const UserGroup=sequelize.define('usergroup',{
         allowNull:false,
         primaryKey:true
     },
-   
+    admin:{
+        type:Sequelize.BOOLEAN,
+        allowNull:false, 
+        defaultValue:false
+    }
 
 })
 

@@ -1,30 +1,86 @@
-const Group=require('../models/group')
+const Group = require("../models/group");
+const User = require("../models/user");
+const { Op } = require("sequelize");
+const UserGroup = require("../models/usergroup");
+exports.postCreateGroup = async (req, res, next) => {
+  try {
+    const { name, createdbyname, createdbyid } = req.body;
 
-exports.postCreateGroup=async(req,res,next)=>{
- try{
- const {name,adminname,adminid}=req.body
- console.log(">>>>>>>>>>>>>adminid",adminid)
-  const group=await Group.create({
-      name:name,
-      adminname:adminname,
-      adminid:adminid
-   })
+    const group = await Group.create({
+      name: name,
+      createdbyname: createdbyname,
+      createdbyid: createdbyid,
+    });
 
-   await req.user.addGroup(group)
-   res.status(201).json(group)
-}
-catch(err){
-    res.status(500).json({err:err,success:false})
-}
-}
+    await req.user.addGroup(group, { through: { admin: true } });
+    res.status(201).json(group);
+  } catch (err) {
+    res.status(500).json({ err: err, success: false });
+  }
+};
 
-exports.getGroup=async(req,res,next)=>{
-    try{
-   const groups= await req.user.getGroups()
-   console.log(groups)
-   res.status(200).json(groups)
+exports.getGroup = async (req, res, next) => {
+  //     try{
+
+  //      const lastId = req.query.lastId;
+  //      console.log("LASTID>>>>>>",lastId)
+  //      if (lastId) {
+  //      const groups = await req.user.getGroups({
+  //             where: { id: { [Op.gt]: lastId }},
+  //           });
+  //           console.log("GROUPS>>>>>",groups)
+  //         return res.status(200).json(groups);
+  //         }
+
+  //    const groups= await req.user.getGroups()
+  //    console.log(groups)
+  //    res.status(200).json(groups)
+  //     }
+  //     catch(err){
+  //         res.status(500).json({err:err,success:false})
+  //     }
+
+  const userId = req.user.id;
+  const { lastId } = req.query;
+
+  if (lastId) {
+    const groups = await UserGroup.findAll({
+      where: { id: { [Op.gt]: lastId }, userId: userId },
+    });
+
+    if (groups.length > 0) {
+      const group = groups[0];
+      const id = group.groupId;
+      const ans = await Group.findByPk(id);
+      return res.status(200).json({ group, ans });
     }
-    catch(err){
-        res.status(500).json({err:err,success:false})
-    }
-}
+    return res.status(200).json({ group: {}, ans: {} });
+  } else {
+    const groups = await req.user.getGroups();
+    console.log(groups);
+    res.status(200).json(groups);
+  }
+};
+
+exports.getGroupMembers = async (req, res, next) => {
+  const { groupId } = req.query;
+
+  const groups = await Group.findAll({ where: { id: groupId } });
+  console.log("Groups", groups);
+  const group = groups[0];
+  console.log("GROUP", group);
+  const users = await group.getUsers({
+    attributes: ["id", "name", "email", "phonenumber"],
+  });
+  res.status(200).json(users);
+};
+
+exports.deleteMember = async (req, res, next) => {
+  const { userId, groupId } = req.query;
+
+  const group = await Group.findByPk(groupId);
+  const user = await User.findByPk(userId);
+
+  group.removeUser(user);
+  res.status(200).json({ message: "deleted successfully" });
+};

@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import GroupNavBar from "./GroupNavBar";
 import "./Chat.css";
 const MessagePanel = () => {
     const authToken=useSelector(state=>state.auth.token)
@@ -19,18 +20,27 @@ const MessagePanel = () => {
         message:enteredMessage
      }
       console.log(message)
-    const response=await axios.post('http://localhost:3000/send-message',message,{params:{groupId:groupId},headers:{"Authorization":authToken}})
-
+    axios.post('http://localhost:3000/send-message',message,{params:{groupId:groupId},headers:{"Authorization":authToken}})
+    .then((response)=>{
+      console.log(response)
+    })
+    .catch(err=>{
+      console.log(err.response.data.error)
+      alert(err.response.data.error)
+    })
     inputMessageRef.current.value=''
     }
   
   return (
     <div className="messagepanel">
+     <div className="groupnavbar">
+      {groupId!=undefined ? (<GroupNavBar/>):''}
+     </div>
       <div className="messages">
         <Messages />
       </div>
        <form className="messageInput" onSubmit={messageSubmitHandler}>
-        <input type="text" className="input" placeholder="Text something...." ref={inputMessageRef}/>
+        <input type="text" className="input" placeholder="Text something...." ref={inputMessageRef} required/>
         <button
           type='submit'
           className="messageButton"

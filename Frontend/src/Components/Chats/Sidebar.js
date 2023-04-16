@@ -2,7 +2,8 @@ import { Button } from "react-bootstrap";
 import "./Chat.css";
 import { useRef, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { messageActions } from "../../Store/message-slice";
 import ShowGroup from "./ShowGroup";
 const Sidebar = () => {
   const [isForm, setIsForm] = useState(false);
@@ -11,6 +12,8 @@ const Sidebar = () => {
   const name=useSelector(state=>state.auth.name)
   const userId=useSelector(state=>state.auth.userId)
   const groups=useSelector(state=>state.message.groups)
+  const dispatch=useDispatch();
+
   console.log("groups>>>",groups)
   const openFormHandler = () => {
     setIsForm(true);
@@ -21,14 +24,15 @@ const Sidebar = () => {
 
     const group={
       name:enteredGroupName,
-      adminname:name,
-      adminid:userId
+      createdbyname:name,
+      createdbyid:userId
     }
 
     axios.post("http://localhost:3000/create-group",group, {
       headers: { Authorization: authToken},
     }).then((response)=>{
       console.log(response)
+      
     })
   };
 
@@ -56,7 +60,7 @@ const Sidebar = () => {
         )}
       </div>
       {groups.map((group)=>(
-         <ShowGroup name={group.name} id={group.id} adminname={group.adminname} adminid={group.adminid}/>
+         <ShowGroup name={group.name} id={group.id}  isAdmin={group.usergroup.admin}/>
       ))}
     </div>
   );

@@ -11,6 +11,8 @@ const Header = () => {
 
   const logoutHandler=()=>{
     dispatch(messageActions.setGroupId(null))
+    dispatch(messageActions.setGroupName(null))
+
     dispatch(messageActions.setGroups([]))
     dispatch(messageActions.setMessages([]))
     dispatch(authActions.logout())

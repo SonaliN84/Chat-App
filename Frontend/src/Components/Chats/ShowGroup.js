@@ -9,6 +9,8 @@ const userId=useSelector(state=>state.auth.userId)
 const dispatch=useDispatch();
 const showGroupMessagesHandler=()=>{
     dispatch(messageActions.setGroupId(props.id))
+    dispatch(messageActions.setGroupName(props.name))
+    dispatch(messageActions.setIsadmin(props.isAdmin))
     
     axios.get("http://localhost:3000/get-messages", {
         params:{groupId:props.id},
@@ -22,7 +24,23 @@ const showGroupMessagesHandler=()=>{
       })
       .catch((err) => {
         console.log(err);
+        dispatch(messageActions.setMessages([]));
       });
+
+      axios.get("http://localhost:3000/get-group-members", {
+        params:{groupId:props.id},
+        headers: { Authorization: authToken },
+      })
+      .then((response) => {
+        console.log("group members",response);
+      //   dispatch(messageActions.setMessages(response.data));
+      //  dispatch(messageActions.setGroupId(props.id))
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      
 }
   return(
     <div className="showgroup" onClick={showGroupMessagesHandler}>
