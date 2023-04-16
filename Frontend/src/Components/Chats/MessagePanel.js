@@ -7,6 +7,7 @@ import axios from "axios";
 import "./Chat.css";
 const MessagePanel = () => {
     const authToken=useSelector(state=>state.auth.token)
+    const groupId=useSelector(state=>state.message.groupId)
     const inputMessageRef=useRef('')
     console.log("authToken",authToken)
 
@@ -18,10 +19,9 @@ const MessagePanel = () => {
         message:enteredMessage
      }
       console.log(message)
-    const response=await axios.post('http://localhost:3000/send-message',message,{headers:{"Authorization":authToken}})
+    const response=await axios.post('http://localhost:3000/send-message',message,{params:{groupId:groupId},headers:{"Authorization":authToken}})
 
-
-
+    inputMessageRef.current.value=''
     }
   
   return (

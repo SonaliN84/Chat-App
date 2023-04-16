@@ -12,7 +12,7 @@ function App() {
   const authIsLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   console.log("authIsLoggedIn", authIsLoggedIn);
   const authToken = useSelector((state) => state.auth.token);
- 
+  const groupId=useSelector(state=>state.message.groupId)
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -30,14 +30,16 @@ function App() {
       }
 
       axios
-        .get("http://localhost:3000/get-messages", {params:{lastId:lastId},
+        .get("http://localhost:3000/get-messages", {params:{lastId:lastId,groupId:groupId},
           headers: { Authorization: authToken },
         })
         .then((response) => {
           console.log("resposne",response.data.messages);
           if(response.data.messages.length>0){
           console.log("original arry>>>",array)
+          if(array.length>30){
           array.shift();
+          }
           let newArray=[...array,...response.data.messages]
           localStorage.setItem('messages',JSON.stringify(newArray))
           console.log("new array",newArray)
@@ -55,8 +57,10 @@ function App() {
 
     return () => {
       clearInterval(interval);
+      console.log("clearInterval")
+
     };
-  }, [authIsLoggedIn]);
+  }, [authIsLoggedIn,groupId]);
 
   return (
     <div>

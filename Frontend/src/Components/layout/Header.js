@@ -10,9 +10,11 @@ const Header = () => {
   const dispatch=useDispatch();
 
   const logoutHandler=()=>{
-     dispatch(authActions.logout())
-     dispatch(messageActions.setMessages([]))
-     
+    dispatch(messageActions.setGroupId(null))
+    dispatch(messageActions.setGroups([]))
+    dispatch(messageActions.setMessages([]))
+    dispatch(authActions.logout())
+
   }
   return (
     <Navbar collapseOnSelect expand="lg" className="Header">
@@ -37,6 +39,7 @@ const Header = () => {
                Logout
               </Link>
             </Nav.Link>)}
+            
           </Nav>
         </Navbar.Collapse>
       </Container>

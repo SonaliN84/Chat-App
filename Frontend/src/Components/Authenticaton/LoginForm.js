@@ -31,20 +31,19 @@ const LoginForm=()=>{
       console.log(response)
       console.log(response.data.token)
       console.log(response.data.userName)
-      
-      dispatch(authActions.login({token:response.data.token,name:response.data.userName}))
+      dispatch(messageActions.setMessages([]))
+      dispatch(authActions.login({token:response.data.token,name:response.data.userName,userId:response.data.userId}))
       history.replace('/Chat')
       
-      axios.get("http://localhost:3000/get-messages", {
-        headers: { Authorization: response.data.token },
-      })
-      .then((response) => {
-        console.log(response);
-        dispatch(messageActions.setMessages(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      
+      axios.get("http://localhost:3000/get-groups", {
+          headers: { Authorization: response.data.token },
+        }).then(res=>{
+          console.log("group list",res)
+          console.log(res.data)
+          dispatch(messageActions.setGroups(res.data));
+        })
+
 
       
     }
