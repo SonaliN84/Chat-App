@@ -32,7 +32,8 @@ const Sidebar = () => {
       headers: { Authorization: authToken},
     }).then((response)=>{
       console.log(response)
-      
+      let result={...response.data.dataValues,usergroup:response.data.usergroup}
+      dispatch(messageActions.setGroups([...groups,result]))
     })
   };
 

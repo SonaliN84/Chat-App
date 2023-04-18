@@ -2,6 +2,7 @@ const Group = require("../models/group");
 const User = require("../models/user");
 const { Op } = require("sequelize");
 const UserGroup = require("../models/usergroup");
+const io=require('../socket')
 exports.postCreateGroup = async (req, res, next) => {
   try {
     const { name, createdbyname, createdbyid } = req.body;
@@ -12,8 +13,9 @@ exports.postCreateGroup = async (req, res, next) => {
       createdbyid: createdbyid,
     });
 
-    await req.user.addGroup(group, { through: { admin: true } });
-    res.status(201).json(group);
+    const ans=await req.user.addGroup(group, { through: { admin: true } });
+    console.log("ANSWER>>>>>>>>>>>>>>>",ans)
+    res.status(201).json({...group,usergroup:ans[0]});
   } catch (err) {
     res.status(500).json({ err: err, success: false });
   }
@@ -80,7 +82,8 @@ exports.deleteMember = async (req, res, next) => {
 
   const group = await Group.findByPk(groupId);
   const user = await User.findByPk(userId);
-
+  
   group.removeUser(user);
+  io.getIO().emit('removeFromGroup',{userId:userId,groupId:groupId})
   res.status(200).json({ message: "deleted successfully" });
 };

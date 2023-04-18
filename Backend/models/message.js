@@ -16,6 +16,10 @@ const Message=sequelize.define('messages',{
     message:{
         type:Sequelize.STRING,
         allowNull:false
+    },
+    url:{
+        type:Sequelize.BOOLEAN,
+        allowNull:false
     }
 
 })

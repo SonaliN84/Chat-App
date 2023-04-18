@@ -9,7 +9,7 @@ const Messages = () => {
     <div>
     {messages.map((msg)=>(
     
-    <ShowMessage name={msg.name} message={msg.message} />
+    <ShowMessage name={msg.name} message={msg.message} url={msg.url}/>
      ))}
     </div>
   );

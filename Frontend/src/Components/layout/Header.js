@@ -2,14 +2,17 @@ import { Nav, Navbar, Container } from "react-bootstrap";
 import {  Link } from "react-router-dom";
 import { useSelector,useDispatch} from "react-redux";
 import { authActions } from "../../Store/auth-slice";
-
+import { socket } from "../../App";
 import "./Header.css";
 import { messageActions } from "../../Store/message-slice";
 const Header = () => {
   const authIsLoggedIn=useSelector(state=>state.auth.isLoggedIn);
   const dispatch=useDispatch();
 
+  const groupId=useSelector(state=>state.message.groupId)
   const logoutHandler=()=>{
+
+    socket.emit('leaveroom',groupId)
     dispatch(messageActions.setGroupId(null))
     dispatch(messageActions.setGroupName(null))
 

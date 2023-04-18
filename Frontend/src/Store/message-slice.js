@@ -7,7 +7,7 @@ const initialSearchResult=localStorage.getItem('searchresult')
 const initialIsAdmin=localStorage.getItem('isAdmin')
 const convertToBooleanIsAdmin=(initialIsAdmin=="true")
 const initialMessageState={
-    messages:initialMessages,
+    messages:[],
     groups:[],
     groupId:initialGroupId,
     groupname:initialGroupName,

@@ -4,6 +4,7 @@ const jwt=require('jsonwebtoken')
 const { Op } = require("sequelize")
 const Group = require('../models/group')
 const UserGroup = require('../models/usergroup')
+const io=require('../socket')
 
 function generateAccessToken(id){
     return jwt.sign({userId:id},process.env.TOKEN_SECRET_KEY)
@@ -104,15 +105,19 @@ exports.getSearchUser=async(req,res,next)=>{
     }
 }
 
+
 exports.postAddUserToGroup=async(req,res,next)=>{
     try{
-    const {groupId,userId}=req.body;
-    console.log(">>>>>",groupId,userId)
+   const {groupId,userId}=req.body;
+   console.log(">>>>>",groupId,userId)
    const groups=await Group.findAll({where:{id:groupId}})
    const group=groups[0];
+   console.log("GROUP",group)
    const users=await User.findAll({where:{id:userId}})
    const user=users[0]
-   await group.addUser(user)
+   const result=  await group.addUser(user)
+   console.log("RESULT>>>>>",result)
+    io.getIO().emit('addToGroup',{userId:userId,group:{...group,...result}})
     res.status(200).json({message:"User added to group successfully"})
     }
     catch(err){
@@ -124,6 +129,7 @@ exports.postAddUserToGroup=async(req,res,next)=>{
 exports.putMakeAdmin=async(req,res,next)=>{
    const {userId,groupId}=req.body;
    const result=await UserGroup.findAll({where:{userId:userId,groupId:groupId}})
+
    const ans=result[0]
    ans.admin=true;
    await ans.save()

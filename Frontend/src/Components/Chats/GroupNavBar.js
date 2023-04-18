@@ -38,6 +38,7 @@ const GroupNavBar = () => {
       clearTimeout(identifier);
     };
   }, [enteredUser]);
+  
   const getUserHandler = (event) => {
     setUser(event.target.value);
   };
