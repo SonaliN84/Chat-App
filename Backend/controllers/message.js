@@ -4,6 +4,7 @@ const Group=require('../models/group')
 const UserGroup=require('../models/usergroup')
 const io=require('../socket')
 const AWS=require('aws-sdk');
+const ArchivedMessage=require('../models/archivedmessages')
 function isStringInValid(string) {
   if (string === undefined || string == null || string.trim().length === 0) {
     return true;
@@ -25,10 +26,13 @@ exports.getMessage = async (req, res, next) => {
     //   offset = 0;
     // }
 
+    const previousmessages=await ArchivedMessage.findAll({ where:{groupId:groupId}})
+
     
-    const messages = await Message.findAll({ where:{groupId:groupId}});
-    console.log(">>>>>>messages>>>", messages);
-    res.status(200).json(messages);
+    const currentmessages = await Message.findAll({ where:{groupId:groupId}});
+    console.log(">>>>>>messages>>>", previousmessages);
+    let newmessage=[...previousmessages,...currentmessages]
+    res.status(200).json(newmessage);
   } catch (err) {
     console.log(err);
     res.status(500).json({error:"Something went wrong"})

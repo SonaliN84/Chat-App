@@ -18,6 +18,8 @@ const ShowMessage = (props) => {
     image = false;
   }
 
+  
+
   return (
     <div>
       {userName === senderName && URL == false && (
@@ -60,7 +62,7 @@ const ShowMessage = (props) => {
       {!image && userName !== senderName && URL == true && (
         <div>
           <div className="sendername">{props.name}</div>
-          <a href={props.message}>
+          <a href={props.message} >
             <img
               className="showmessage border2 link"
               src="https://freeiconshop.com/wp-content/uploads/edd/document-download-solid.png"

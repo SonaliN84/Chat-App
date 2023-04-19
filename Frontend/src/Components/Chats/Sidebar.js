@@ -60,7 +60,7 @@ const Sidebar = () => {
           </div>
         )}
       </div>
-      {groups.map((group)=>(
+      {groups!=null && groups.map((group)=>(
          <ShowGroup name={group.name} id={group.id}  isAdmin={group.usergroup.admin}/>
       ))}
     </div>

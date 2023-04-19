@@ -6,7 +6,7 @@ import RootLayout from "./pages/RootLayout";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { messageActions } from "./Store/message-slice";
-import axios from "axios";
+
 import openSocket from "socket.io-client";
 
 function App() {
@@ -19,17 +19,6 @@ function App() {
   const msgs = useSelector((state) => state.message.messages);
   console.log("MESSAGES>>>", msgs);
   const groups = useSelector((state) => state.message.groups);
-
-  // socket.on('post',data=>{
-  //   console.log("socket response",data.message)
-  //   console.log(data.message)
-  //   let arr=[];
-
-  //   arr=[...msgs,data.message]
-
-  //   console.log("FINAL RESULT",arr)
-  //     dispatch(messageActions.setMessages(arr))
-  //  })
 
   useEffect(() => {
     const currentGroups = JSON.parse(localStorage.getItem("groups"));
@@ -65,7 +54,6 @@ function App() {
   socket.on("removeFromGroup", (data) => {
     if (data.userId == userId) {
       const newgroups = groups.filter((grp) => grp.id != data.groupId);
-
       dispatch(messageActions.setGroups(newgroups));
     }
   });
