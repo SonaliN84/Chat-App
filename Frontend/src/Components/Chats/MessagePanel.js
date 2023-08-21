@@ -35,14 +35,12 @@ const MessagePanel = () => {
           console.log(err.response.data.error);
           alert(err.response.data.error);
         });
-      
 
       inputMessageRef.current.value = "";
     }
     if (selectedfile !== null) {
-
       let formData = new FormData();
-      console.log("SELECTED FILE>>>>>", selectedfile);
+      console.log("SELECTED FILE", selectedfile);
       formData.append("myfile", selectedfile);
       console.log("FORMDATA", formData);
 

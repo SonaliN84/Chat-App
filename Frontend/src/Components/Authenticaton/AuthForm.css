@@ -1,18 +1,15 @@
-.Auth-form{
-    width:400px;
-    max-width: 90%;
-    margin:20vh auto;
-    padding:20px;
-    border-radius:20px;
-    
-    box-shadow: 3px 5px 15px rgb(212, 210, 210);
-}
-.alignCenter{
-    text-align: center;
-}
-.decorationNone{
-    text-decoration: none;
-}
+.Auth-form {
+  width: 400px;
+  max-width: 90%;
+  margin: 20vh auto;
+  padding: 20px;
+  border-radius: 20px;
 
-
-
+  box-shadow: 3px 5px 15px rgb(212, 210, 210);
+}
+.alignCenter {
+  text-align: center;
+}
+.decorationNone {
+  text-decoration: none;
+}

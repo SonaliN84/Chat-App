@@ -12,12 +12,12 @@ import openSocket from "socket.io-client";
 function App() {
   const authIsLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   console.log("authIsLoggedIn", authIsLoggedIn);
-  const authToken = useSelector((state) => state.auth.token);
+  
   const userId = useSelector((state) => state.auth.userId);
 
   const dispatch = useDispatch();
   const msgs = useSelector((state) => state.message.messages);
-  console.log("MESSAGES>>>", msgs);
+  console.log("MESSAGES", msgs);
   const groups = useSelector((state) => state.message.groups);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function App() {
     console.log("ANSWER>>", data.userId, userId);
     if (data.userId == userId) {
       let arr = [];
-      console.log("DATA>>>>>>>>>>>>>", data);
+      console.log("DATA", data);
       let newgroup = { ...data.group.dataValues, usergroup: data.group[0] };
       arr = [...groups, newgroup];
       console.log("ADDED GROUP", data.group);

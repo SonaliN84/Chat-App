@@ -1,9 +1,8 @@
 import { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { Button } from "react-bootstrap";
 
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
+
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { messageActions } from "../../Store/message-slice";
@@ -12,14 +11,14 @@ import ShowGroupMembers from "./ShowGroupMembers";
 
 const GroupNavBar = () => {
   const dispatch = useDispatch();
-  const groupId=useSelector(state=>state.message.groupId)
+  const groupId = useSelector((state) => state.message.groupId);
   const authToken = useSelector((state) => state.auth.token);
   const isAdmin = useSelector((state) => state.message.isAdmin);
   const [enteredUser, setUser] = useState("");
-  const groupMembers=useSelector(state=>state.message.groupmembers)
+  const groupMembers = useSelector((state) => state.message.groupmembers);
   const searchResult = useSelector((state) => state.message.searchresult);
-  console.log("search result>>", searchResult);
- console.log("groupMembers>>>>>",groupMembers)
+  console.log("search result", searchResult);
+  console.log("groupMembers", groupMembers);
   useEffect(() => {
     const identifier = setTimeout(() => {
       axios
@@ -38,7 +37,7 @@ const GroupNavBar = () => {
       clearTimeout(identifier);
     };
   }, [enteredUser]);
-  
+
   const getUserHandler = (event) => {
     setUser(event.target.value);
   };
@@ -56,15 +55,16 @@ const GroupNavBar = () => {
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => {
     setShow1(true);
-    axios.get('http://localhost:3000/get-group-members',{
+    axios
+      .get("http://localhost:3000/get-group-members", {
         params: { groupId: groupId },
         headers: { Authorization: authToken },
       })
-      .then((response)=>{
-        console.log(">>>>>>",response.data)
-        dispatch(messageActions.setGroupMembers(response.data))
-      })
-}
+      .then((response) => {
+        console.log(response.data);
+        dispatch(messageActions.setGroupMembers(response.data));
+      });
+  };
 
   return (
     <Fragment>
@@ -111,13 +111,19 @@ const GroupNavBar = () => {
             <Modal.Title>Group Members</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <div>
+            <div>
               {groupMembers.map((result) => (
-                <ShowGroupMembers id={result.id} name={result.name} email={result.email} phonenumber={result.phonenumber} admin={result.usergroup.admin} groupMembers={groupMembers}/>
+                <ShowGroupMembers
+                  id={result.id}
+                  name={result.name}
+                  email={result.email}
+                  phonenumber={result.phonenumber}
+                  admin={result.usergroup.admin}
+                  groupMembers={groupMembers}
+                />
               ))}
             </div>
           </Modal.Body>
-         
         </Modal>
       </div>
     </Fragment>

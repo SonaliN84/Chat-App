@@ -1,18 +1,16 @@
 import "./Chat.css";
 import { useSelector } from "react-redux";
-import ShowMessage from './ShowMessage'
+import ShowMessage from "./ShowMessage";
 const Messages = () => {
-  const messages=useSelector(state=>state.message.messages)
-  console.log("messages",messages)
+  const messages = useSelector((state) => state.message.messages);
+  console.log("messages", messages);
 
   return (
     <div>
-    {messages.map((msg)=>(
-    
-    <ShowMessage name={msg.name} message={msg.message} url={msg.url}/>
-     ))}
+      {messages.map((msg) => (
+        <ShowMessage name={msg.name} message={msg.message} url={msg.url} />
+      ))}
     </div>
   );
- 
 };
 export default Messages;

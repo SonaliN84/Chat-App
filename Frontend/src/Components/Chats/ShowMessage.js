@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./Chat.css";
 import { useSelector } from "react-redux";
 const ShowMessage = (props) => {
@@ -17,8 +16,6 @@ const ShowMessage = (props) => {
   } else {
     image = false;
   }
-
-  
 
   return (
     <div>
@@ -62,7 +59,7 @@ const ShowMessage = (props) => {
       {!image && userName !== senderName && URL == true && (
         <div>
           <div className="sendername">{props.name}</div>
-          <a href={props.message} >
+          <a href={props.message}>
             <img
               className="showmessage border2 link"
               src="https://freeiconshop.com/wp-content/uploads/edd/document-download-solid.png"

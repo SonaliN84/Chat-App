@@ -8,6 +8,4 @@ router.post('/send-message',authController.authenticate,messageController.postMe
 
 router.get('/get-messages',authController.authenticate,messageController.getMessage)
 
-
-
 module.exports=router

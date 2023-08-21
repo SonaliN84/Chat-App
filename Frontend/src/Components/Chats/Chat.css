@@ -40,123 +40,120 @@
 ::placeholder {
   color: lightgray;
 }
-.messageButton{
-    background-color: #C85C8E;
-    border: none;
-    padding: 7px 10px;
-    outline: none;
-    color: white;
-    border-radius: 5px;
+.messageButton {
+  background-color: #c85c8e;
+  border: none;
+  padding: 7px 10px;
+  outline: none;
+  color: white;
+  border-radius: 5px;
 }
-.showmessage{
-  background-color: #C85C8E;
-  border: 1px solid #C85C8E;
+.showmessage {
+  background-color: #c85c8e;
+  border: 1px solid #c85c8e;
   padding: 5px;
-  margin:5px;
-  width:50%;
+  margin: 5px;
+  width: 50%;
   /* overflow: auto; */
   word-wrap: break-word;
   clear: both;
 }
-.border1{
-  border-radius: 10px 0px  10px 10px;
+.border1 {
+  border-radius: 10px 0px 10px 10px;
 }
-.border2{
-  border-radius: 0px 10px  10px 10px;
+.border2 {
+  border-radius: 0px 10px 10px 10px;
 }
-.float{
-  float:right;
-  clear:both;
+.float {
+  float: right;
+  clear: both;
 }
-.sendername{
-  margin:10px 2px 0px 7px;
-  color:#8b0a46;
+.sendername {
+  margin: 10px 2px 0px 7px;
+  color: #8b0a46;
   clear: both;
   font-weight: bold;
   font-style: italic;
 }
-.creategroup{
-  background-color: #9D3C72;
-  color:white;
+.creategroup {
+  background-color: #9d3c72;
+  color: white;
   margin: 10px;
   height: 100px;
-  border: 1px solid #9D3C72;
+  border: 1px solid #9d3c72;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.button{
+.button {
   background-color: #df71a4;
-  border:1px solid #df71a4;
+  border: 1px solid #df71a4;
   outline: none;
   padding: 5px;
-  color:white;
-  border-radius:5px;
-  
+  color: white;
+  border-radius: 5px;
 }
-.groupform{
+.groupform {
   display: flex;
-  
 }
-.groupinput{
-  border:1px solid #9D3C72;
+.groupinput {
+  border: 1px solid #9d3c72;
   outline: none;
   border-radius: 5px;
   margin-right: 6px;
 }
-.showgroup{
+.showgroup {
   margin: 10px;
-  background-color:#9D3C72;
+  background-color: #9d3c72;
   padding: 10px;
-  border-bottom:1px solid #9D3C72;
+  border-bottom: 1px solid #9d3c72;
   border-radius: 10px;
   font-style: italic;
   overflow: auto;
   color: white;
 }
-.showgroup:hover{
- box-shadow: 3px 5px 10px #9D3C72; 
+.showgroup:hover {
+  box-shadow: 3px 5px 10px #9d3c72;
 }
-.admin{
+.admin {
   background-color: aliceblue;
-  color:#8b0a46;
-  border:1px solid white;
+  color: #8b0a46;
+  border: 1px solid white;
   border-radius: 5px;
   font-size: 12px;
-  padding:2px;
+  padding: 2px;
   font-style: italic;
 }
-.groupnavbar{
-  height:50px;
-  background-color:#cb6997;
+.groupnavbar {
+  height: 50px;
+  background-color: #cb6997;
   border-left: #6b103b;
   display: flex;
   align-items: center;
   justify-content: space-between;
   overflow: auto;
 }
-.button2{
-  background-color: #9D3C72;
-  border:1px solid #9D3C72;
+.button2 {
+  background-color: #9d3c72;
+  border: 1px solid #9d3c72;
   outline: none;
   padding: 5px;
-  color:white;
-  border-radius:5px;
-  
+  color: white;
+  border-radius: 5px;
 }
-.groupname{
+.groupname {
   font-weight: bold;
   font-size: 20px;
 }
-.floatleft{
+.floatleft {
   float: left;
 }
-.showresult{
+.showresult {
   margin: 10px;
-  background-color:#9D3C72;
+  background-color: #9d3c72;
   padding: 10px;
-  border-bottom:1px solid #9D3C72;
+  border-bottom: 1px solid #9d3c72;
   border-radius: 10px;
   font-style: italic;
   overflow: auto;
@@ -165,18 +162,14 @@
   align-items: center;
   justify-content: space-between;
 }
-.button3{
-  border:1px solid white;
+.button3 {
+  border: 1px solid white;
   border-radius: 5px;
-  padding:0px 4px;
+  padding: 0px 4px;
   background-color: white;
   outline: none;
   font-style: italic;
-
 }
-.link{
-  
- cursor: pointer;
-  
-  
+.link {
+  cursor: pointer;
 }

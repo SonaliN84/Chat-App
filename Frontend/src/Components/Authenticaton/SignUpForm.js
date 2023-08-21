@@ -6,38 +6,38 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 const SignUP = () => {
-  const history=useHistory();
+  const history = useHistory();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const nameInputRef = useRef();
   const phoneNumberInputRef = useRef();
 
-  const submitHandler =async (event) => {
-    try{
-    event.preventDefault();
-    const enteredEmail = emailInputRef.current.value;
-    const enteredPassword = passwordInputRef.current.value;
-    const enteredName = nameInputRef.current.value;
-    const enteredPhoneNumber = phoneNumberInputRef.current.value;
+  const submitHandler = async (event) => {
+    try {
+      event.preventDefault();
+      const enteredEmail = emailInputRef.current.value;
+      const enteredPassword = passwordInputRef.current.value;
+      const enteredName = nameInputRef.current.value;
+      const enteredPhoneNumber = phoneNumberInputRef.current.value;
 
-    const user={
-      name:enteredName,
-      email:enteredEmail,
-      phonenumber:enteredPhoneNumber,
-      password:enteredPassword
+      const user = {
+        name: enteredName,
+        email: enteredEmail,
+        phonenumber: enteredPhoneNumber,
+        password: enteredPassword,
+      };
+      console.log(user);
+      const response = await axios.post(
+        "http://localhost:3000/user/signup",
+        user
+      );
+
+      alert(response.data.message);
+      history.replace("/Login");
+    } catch (err) {
+      console.log(err.response.data.err);
+      alert(err.response.data.err);
     }
-    console.log(user)
-   const response= await axios.post('http://localhost:3000/user/signup',user)
-  
-   alert(response.data.message)
-   history.replace('/Login')
-  }
-  catch(err)
-  {
-   console.log(err.response.data.err)
-   alert(err.response.data.err)
-  }
-
   };
   return (
     <Form className="Auth-form border d-grid" onSubmit={submitHandler}>
