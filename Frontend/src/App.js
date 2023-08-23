@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import SignUP from "./pages/SignUp";
 import Login from "./pages/Login";
 import ChatPage from "./pages/ChatPage";
@@ -6,13 +6,12 @@ import RootLayout from "./pages/RootLayout";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { messageActions } from "./Store/message-slice";
-
 import openSocket from "socket.io-client";
 
 function App() {
   const authIsLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   console.log("authIsLoggedIn", authIsLoggedIn);
-  
+
   const userId = useSelector((state) => state.auth.userId);
 
   const dispatch = useDispatch();
@@ -31,9 +30,7 @@ function App() {
     console.log("socket response", data.message);
     console.log(data.message);
     let arr = [];
-
     arr = [...msgs, data.message];
-
     console.log("FINAL RESULT", arr);
     dispatch(messageActions.setMessages(arr));
   });
@@ -61,15 +58,24 @@ function App() {
   return (
     <div>
       <RootLayout>
-        <Route path="/Signup" exact>
-          <SignUP />
-        </Route>
-        <Route path="/Login" exact>
-          <Login />
-        </Route>
-        <Route path="/Chat" exact>
-          <ChatPage />
-        </Route>
+        <Switch>
+          <Route path="/Signup" exact>
+            <SignUP />
+          </Route>
+          <Route path="/Login" exact>
+            <Login />
+          </Route>
+          {authIsLoggedIn && (
+            <Route path="/Chat" exact>
+              <ChatPage />
+            </Route>
+          )}
+          {!authIsLoggedIn && (
+            <Route path="/Chat" exact>
+              <Redirect to="/Login" />
+            </Route>
+          )}
+        </Switch>
       </RootLayout>
     </div>
   );

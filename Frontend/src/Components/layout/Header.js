@@ -17,6 +17,15 @@ const Header = () => {
     dispatch(messageActions.setGroups([]));
     dispatch(messageActions.setMessages([]));
     dispatch(authActions.logout());
+    localStorage.removeItem("token");
+    localStorage.removeItem("name");
+    localStorage.removeItem("messages");
+    localStorage.removeItem("userid");
+    localStorage.removeItem("groups");
+    localStorage.removeItem("groupId");
+    localStorage.removeItem("groupname");
+    localStorage.removeItem("searchresult");
+    localStorage.removeItem("isAdmin");
   };
   return (
     <Navbar collapseOnSelect expand="lg" className="Header">

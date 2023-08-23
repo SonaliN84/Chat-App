@@ -17,25 +17,13 @@ const authSlice = createSlice({
   reducers: {
     login(state, action) {
       state.token = action.payload.token;
-      localStorage.setItem("token", action.payload.token);
       state.isLoggedIn = true;
       state.name = action.payload.name;
-      localStorage.setItem("name", action.payload.name);
       state.userId = action.payload.userId;
-      localStorage.setItem("userid", action.payload.userId);
     },
     logout(state) {
       state.token = null;
       state.isLoggedIn = false;
-      localStorage.removeItem("token");
-      localStorage.removeItem("name");
-      localStorage.removeItem("messages");
-      localStorage.removeItem("userid");
-      localStorage.removeItem("groups");
-      localStorage.removeItem("groupId");
-      localStorage.removeItem("groupname");
-      localStorage.removeItem("searchresult");
-      localStorage.removeItem("isAdmin");
     },
   },
 });

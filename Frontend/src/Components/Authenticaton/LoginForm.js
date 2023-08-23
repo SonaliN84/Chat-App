@@ -42,6 +42,9 @@ const LoginForm = () => {
           userId: response.data.userId,
         })
       );
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("name", response.data.userName);
+      localStorage.setItem("userid",response.data.userId);
       history.replace("/Chat");
 
       axios
